@@ -1,8 +1,10 @@
 
 # TissueSample_ASP.NET
 
-
 > You must have Visual Studio and install dependencies by .NET CLI or from NuGet Package Manager.
+
+This repo belongs to "One problem, two solutions" and here I present solution using ASP.NET Stack.
+Another repo is ![MEAN-Stack example](https://github.com/mshadlou/TissueSample_MEAN).
 
 ## Goals
 Imagine that you are going to have a BioBank that get the Collections and Samples associated with each Collection. Data should be saved in DB and user should be able to alter, add, or delete tham.
@@ -18,7 +20,7 @@ This demo has been developed by Microsoft ASP.NET Stack based on Blazor WebAssem
 * Client – It contains the client side/front-end code and the pages.
 * Server – It contains the server side/back-end codes like database connection, controllers, and web API.
 * Shared – It contains the shared code that can be accessed by both client and server.
-![]()
+
 
 ### To run the application
 
