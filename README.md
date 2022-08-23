@@ -77,7 +77,7 @@ By passing an instance of `IDashboardManager` to other view components such as M
 ### Azure Web App
 Azure PaaS enables developers to build, deliver, monitor, scale and run applications entirely in the cloud.
 I have enabled the integration between Azure Deops Repos and Azure Paas. Check the demo in following link.
-<a href="https://tissuesample.azurewebsites.ne"> Live Demo</a>
+<a href="https://tissuesample.azurewebsites.net/"> Live Demo</a>
 
 
 [![License: GPL v2](https://img.shields.io/badge/License-GPL_v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
