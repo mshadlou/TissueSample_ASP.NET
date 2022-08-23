@@ -1,0 +1,27 @@
+﻿@if (IDM.MODAL.ModalWarningView)
+{
+    <div class="modal fade show" id="WarningModelStatic" tabindex="-1" style="display:block">
+	    <div class="modal-dialog">
+		    <div class="modal-content">
+		    <div class="modal-header">
+			    <h5 class="modal-title" id="WarningModelStaticLabel">Warning</h5>
+			    <button type="button" class="btn-close" id="CloseModal1" @onclick="() => IDM.MODAL.Cancle()"></button>
+		    </div>
+		    <div class="modal-body">
+			    @IDM.MODAL.ModalMessage
+		    </div>
+		    <div class="modal-footer">
+			    <button type="button" class="btn btn-secondary" id="CloseModal2" @onclick="() => IDM.MODAL.Cancle()">Close</button>
+			    <button type="submit" class="btn btn-danger" id="ApproveModal" >Delete</button>
+		    </div>
+		    </div>
+	    </div>
+    </div>    
+}
+
+@code {
+	[EditorRequired]
+    [Parameter]
+	public Services.IDashboardManger IDM {get;set;}
+
+}

@@ -1,0 +1,141 @@
+﻿@page "/dashboard"
+@using System.Diagnostics
+@using TissueSample2.Shared.Models
+
+@inject Services.IDashboardManger IDM
+<PageTitle>Dashboard</PageTitle>
+
+<h1>Collection Data</h1>
+<div class="row">
+    <div class="input-group col">
+        <input type="text" class="form-control" placeholder="Search Collections by Title or Disease Term"
+               @bind="IDM.SearchString" @bind:event="oninput" @onkeyup="IDM.FilterCollection" />
+        @if (IDM.SearchString.Length > 0)
+        {
+            <div class="input-group-append">
+                <button class="btn btn-danger" @onclick="IDM.ResetSearch">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        }
+    </div>
+</div>
+<br />
+@if (IDM.collectionList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <!-- Collection Table -->
+    <table class="table table-striped table-info table-hover table-condensed">
+        <thead class="table-success">
+            <tr>
+                <th>ID</th>
+                <th>Disease Term</th>
+                <th>Title</th>
+                <!--<th>Date</th>-->
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var collection in IDM.collectionList)
+            {
+                <tr>
+                    <td @onclick="async() => await IDM.FetchSampleTable(collection.c_id)">@collection.c_id</td>
+                    <td @onclick="async() => await IDM.FetchSampleTable(collection.c_id)">@collection.disease_term</td>
+                    <td @onclick="async() => await IDM.FetchSampleTable(collection.c_id)">@collection.title</td>
+                    <!--<td @onclick="async() => await IDM.FetchSampleTable(collection.c_id)">@collection.date.ToString("dd-MM-yyyy")</td>-->
+                    <td>
+                        <span style="cursor: pointer;" @onclick="() => IDM.EditCollection(collection.c_id)">
+                            &#9999;
+                        </span>
+                        <span style="cursor: pointer;" @onclick="() => IDM.DeleteCollection(collection.c_id)">
+                            &#128465;
+                        </span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+<!-- Collection Form -->
+@if (IDM.Show_CollectionForm)
+{
+    <EditForm Model="@IDM.temp_collection" OnValidSubmit="IDM.SaveCollection">
+        <CollectionForm temp_collection=@IDM.temp_collection />
+    </EditForm>
+}
+
+
+
+@if (IDM.Show_SampleTable)
+{
+    @if (IDM.sampleList == null)
+    {
+        <p><em>Loading...</em></p>
+    } else
+    {
+        <div class="col-md-10 offset-md-1">
+            <h2>Sample Data</h2>
+            
+            <!-- Sample Table -->
+            <table class="table table-striped table-info table-hover table-condensed">
+                <thead class="table-success">
+                    <tr>
+                        <th>ID</th>
+                        <th>Collection ID</th>
+                        <th>Donor Count</th>
+                        <th>Material Type</th>
+                        <th>Date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var sample in IDM.sampleList)
+                    {
+                        <tr>
+                            <td>@sample.id</td>
+                            <td>@sample.c_id</td>
+                            <td>@sample.donor_count</td>
+                            <td>@sample.mat_type</td>
+                            <td>@sample.date.ToString("dd-MM-yyyy")</td>
+                            <td>
+                                <sapn style="cursor: pointer;" @onclick="() => IDM.EditSample(sample.id)">
+                                    &#9999;
+                                </sapn>
+                                <span style="cursor: pointer;" @onclick="() => IDM.DeleteSample(sample.id)">
+                                    &#128465;
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+
+
+
+            <!-- Sample Form-->
+            <EditForm Model="@IDM.temp_sample" OnValidSubmit="IDM.SaveSample">
+                <SampleForm temp_sample=@IDM.temp_sample />
+            </EditForm>
+        </div>
+    }
+}
+
+
+<!-- Modal Warning -->
+<EditForm Model="@IDM.temp_sample" OnValidSubmit="IDM.ApproveModal">
+    <Modal IDM="@IDM" />
+</EditForm>
+
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await IDM.OnInitializedAsync();
+    }
+}
